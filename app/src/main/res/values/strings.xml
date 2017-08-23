@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Credit Note</string>
+    <string name="app_dev">Phantom Projects</string>
+    <string name="saved_business_name">Business Name</string>
+
+    <string name="to_view_name">Credits List </string>
+    <string name="action_settings">Settings</string>
+    <string name="about">An easy way to take a note of your personal as well as small business credits.
+        \nWe are offline at the moment but we shall be syncing the data with cloud soon.
+        \nRatings and Reviews would help us to make the app better.
+        \nThank you.
+        \n \nDeveloper : <a href="">a1100.b1100@gmail.com</a>
+    </string>
+    <string name="about_link"><b> Icon Credit</b> :
+        <a href="http://www.flaticon.com/authors/freepik">Freepik</a>
+        from
+        <a href="http://www.flaticon.com ">www.flaticon.com </a>
+    </string>
+    <string name="banner_home_footer">ca-app-pub-9743484211965804/7539117174</string>
+
+    <string-array name="pref_currency_keys">
+        <item>NRS</item>
+        <item>INR</item>
+        <item>AED</item>
+        <item>PHP</item>
+        <item>IDR</item>
+        <item>GBP</item>
+        <item>LKR</item>
+        <item>MYR</item>
+        <item>PKR</item>
+        <item>KRW</item>
+        <item>XAF</item>
+        <item>MAD</item>
+        <item>USD</item>
+    </string-array>
+
+</resources>

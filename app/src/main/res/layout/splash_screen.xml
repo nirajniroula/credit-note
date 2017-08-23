@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin">
+
+    <com.wolf.nniroula.creditrecorder.utils.TypeWriter
+        android:id="@+id/splash_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:lineSpacingExtra="16dp"
+        android:text="abc"
+        android:textColor="@color/colorAccent"
+        android:textSize="42sp" />
+
+</RelativeLayout>
