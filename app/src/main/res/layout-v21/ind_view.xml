@@ -99,7 +99,7 @@
                     android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
-                    <com.wolf.nniroula.creditrecorder.utils.ProfileTextView
+                    <TextView
                         android:id="@+id/total_text_nrs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                         android:textAppearance="?android:attr/textAppearanceListItemSecondary"
                         android:textColor="@color/colorExtra1" />
 
-                    <com.wolf.nniroula.creditrecorder.utils.ProfileTextView
+                    <TextView
                         android:id="@+id/textPr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                     android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
-                    <com.wolf.nniroula.creditrecorder.utils.ProfileTextView
+                    <TextView
                         android:id="@+id/total_paid_nrs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
                         android:textAppearance="?android:attr/textAppearanceListItemSecondary"
                         android:textColor="@color/colorExtra2" />
 
-                    <com.wolf.nniroula.creditrecorder.utils.ProfileTextView
+                    <TextView
                         android:id="@+id/textPay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:ems="8"
-                    android:hint="Add Paid Amount"
+                    android:hint="Add Debit Amount"
                     android:inputType="numberDecimal" />
 
                 <LinearLayout
@@ -164,7 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="8"
-                        android:hint="Paid Date"
+                        android:hint="Date"
                         android:inputType="textAutoComplete" />
 
                     <CheckBox

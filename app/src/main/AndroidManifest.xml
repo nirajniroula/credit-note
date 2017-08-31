@@ -8,13 +8,15 @@
 
 
     <application
+        android:name=".activity.CreditApplication"
         android:allowBackup="true"
-        android:icon="@drawable/accounting_book"
+        android:icon="@drawable/credit_logo"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.wolf.nniroula.creditrecorder.view.SplashScreen"
+            android:name=".activity.SplashScreen"
             android:screenOrientation="portrait"
             android:theme="@style/FullTheme">
 
@@ -26,7 +28,13 @@
         </activity>
 
         <activity
-            android:name="com.wolf.nniroula.creditrecorder.view.ToView"
+            android:name=".activity.HomeActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeMain" />
+
+        <activity
+            android:name=".activity.ToView"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.example.nniroula.millrecord.TOVIEW" />
@@ -36,7 +44,7 @@
         </activity>
 
         <activity
-            android:name="com.wolf.nniroula.creditrecorder.view.MyActivity"
+            android:name=".activity.MyActivity"
             android:label="@string/app_name"
             android:theme="@style/FullTheme"
             android:windowSoftInputMode="stateHidden">
@@ -48,7 +56,7 @@
         </activity>
 
         <activity
-            android:name="com.wolf.nniroula.creditrecorder.view.IndView"
+            android:name=".activity.IndView"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="com.example.nniroula.millrecord.INDVIEW" />
@@ -56,6 +64,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.SettingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeMain" />
+
+        <activity
+            android:name=".activity.HelpActivity"
+            android:theme="@style/AppThemeMain" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:theme="@style/AppThemeMain" />
+
     </application>
 
 </manifest>

@@ -9,8 +9,10 @@ import android.util.Log;
 
 import com.wolf.nniroula.creditrecorder.model.ItemModel;
 import com.wolf.nniroula.creditrecorder.model.PaidModel;
+import com.wolf.nniroula.creditrecorder.model.RecordManager;
 import com.wolf.nniroula.creditrecorder.model.RecordModel;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -45,7 +47,12 @@ public class Recorder extends SQLiteOpenHelper {
     private static final String TABLE_PAID = "PaidRecord";
     private static final String TABLE_USER = "UserRecord";
 
+    public static Double TOTAL_CREDITS = 0.00;
+    public static Double TOTAL_DEBITS = 0.00;
+    public static int TOTAL_USERS = 0;
+
     private static final int DATABASE_VERSION = 1;
+    private static Recorder db;
 
     private Context ourContext;
     private static final String CREATE_TABLE_RECORD = "CREATE TABLE " + TABLE_ENTRY +
@@ -74,9 +81,15 @@ public class Recorder extends SQLiteOpenHelper {
             + KEY_IMAGE + " TEXT" + ")";
 
 
-    public Recorder(Context context) {
+    public Recorder(Context context) throws IOException {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public synchronized static Recorder getInstance(Context context)
+            throws IOException {
+        if (db == null) db = new Recorder(context);
+        return db;
     }
 
     @Override
@@ -98,7 +111,7 @@ public class Recorder extends SQLiteOpenHelper {
     }
 
 
-    public long CreateEntry(String Name, Double Wt, String item, String Unit, Double Price, String Date) {
+    public long CreateEntry(String Name, Double Wt, String item, String Unit, Double Price, String Date) throws IOException {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -114,7 +127,7 @@ public class Recorder extends SQLiteOpenHelper {
         return res;
     }
 
-    public long CreatePaid(String Name, Double Paid, String Date) {
+    public long CreatePaid(String Name, Double Paid, String Date) throws IOException {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -124,6 +137,7 @@ public class Recorder extends SQLiteOpenHelper {
 
         long res = db.insert(TABLE_PAID, null, cv);
         Log.d("tag", "Insert: " + res);
+        db.close();
         return res;
     }
 
@@ -163,7 +177,7 @@ public class Recorder extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
 
             do {
-                ItemModel itemModel = new ItemModel(Integer.parseInt(cursor.getString(0)), cursor.getString(1),cursor.getString(2), cursor.getDouble(3));
+                ItemModel itemModel = new ItemModel(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getDouble(3));
 
                 ItemList.add(itemModel);
             } while (cursor.moveToNext());
@@ -182,7 +196,7 @@ public class Recorder extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 //        if (cursor.moveToFirst()) {
-        ItemModel itemModel = new ItemModel(Integer.parseInt(cursor.getString(0)), cursor.getString(1),cursor.getString(2), cursor.getDouble(3));
+        ItemModel itemModel = new ItemModel(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getDouble(3));
 //            }
 //
         db.close();
@@ -214,8 +228,8 @@ public class Recorder extends SQLiteOpenHelper {
 
             do {
                 RecordModel contMod = new RecordModel(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getDouble(2), cursor.getString(3), cursor.getString(4), cursor.getDouble(5), cursor.getString(6));
-
                 ContactList.add(contMod);
+                RecordManager.TOTAL_CREDITS += contMod.getPrice();
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -223,6 +237,30 @@ public class Recorder extends SQLiteOpenHelper {
 
         return ContactList;
     }
+
+    public ArrayList<PaidModel> getAllPaid() {
+        ArrayList<PaidModel> PaidList = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PAID;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Fetch the data from first row
+        if (cursor.moveToFirst()) {
+
+            do {
+                PaidModel contMod = new PaidModel(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getDouble(2), cursor.getString(3));
+                Log.v("Last", "update_date" + cursor.getString(1));
+                PaidList.add(contMod);
+                RecordManager.TOTAL_DEBITS += contMod.getPaid();
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return PaidList;
+    }
+
 
     public ArrayList<RecordModel> getAllIndData(String UserName) {
         ArrayList<RecordModel> RecordList = new ArrayList<>();
@@ -346,7 +384,6 @@ public class Recorder extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(TABLE_PAID, KEY_NAME + "=?", new String[]{name});
-
         db.close();
         Log.v("DB", "Deleted rows from favourite.");
     }

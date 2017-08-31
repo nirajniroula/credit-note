@@ -20,3 +20,9 @@
 }
 -keepattributes *Annotation*,SourceFile,LineNumberTable
 -keep class android.support.v7.widget.SearchView { *; }
+-keep class com.parse.*{ *; }
+-dontwarn com.parse.**
+-dontwarn com.squareup.picasso.**
+-keepclasseswithmembernames class * {
+    native <methods>;
+}

@@ -20,38 +20,49 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <TextView
-                android:id="@+id/textTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@color/cardview_light_background"
-                android:elevation="2dp"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="Price Settings"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/floatNew"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="-48dp"
-                android:elevation="8dp"
-                android:src="@android:drawable/ic_input_add"
-                android:tint="@android:color/white"
-                app:layout_anchor="@id/textTitle" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floatNew"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_input_add"
+                    android:tint="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/textTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/cardview_light_background"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:text="Item setting"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/cardview_light_background"
+                android:elevation="2dp" />
+
+
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"></Spinner>
+                android:layout_marginTop="16dp" />
 
 
             <EditText

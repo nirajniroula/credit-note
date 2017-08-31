@@ -6,6 +6,7 @@
     android:layout_height="fill_parent">
 
     <LinearLayout
+        style="@style/AppTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
@@ -52,7 +53,8 @@
             <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:scrollbarTrackHorizontal="@null">
 
                 <RadioGroup
                     android:id="@+id/radLayout0"
@@ -71,12 +73,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
-                <EditText
+                <net.steamcrafted.materialiconlib.MaterialIconView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/back"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center|left"
+                    android:layout_weight="2"
+                    android:scaleType="center"
+                    app:materialIcon="arrow_left"
+                    app:materialIconColor="@color/my_blue"
+                    app:materialIconSize="24dp" />
+
+                <com.rey.material.widget.EditText
                     android:id="@+id/input_name"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="8"
                     android:hint="*Name"
                     android:inputType="textCapWords" />
             </android.support.design.widget.TextInputLayout>
@@ -87,7 +103,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp">
 
-                <EditText
+                <com.rey.material.widget.EditText
                     android:id="@+id/input_weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -100,11 +116,13 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp">
 
-                <EditText
+                <com.rey.material.widget.EditText
                     android:id="@+id/input_paid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
+                    android:background="@null"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/my_blue" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -114,16 +132,18 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
-                <EditText
+                <com.rey.material.widget.EditText
                     android:id="@+id/input_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@null"
                     android:ems="10"
                     android:hint="*Date [1993 Aug 28 ]"
-                    android:inputType="textCapWords" />
+                    android:inputType="textCapWords"
+                    android:textColor="@color/my_blue" />
 
 
-                <CheckBox
+                <com.rey.material.widget.CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

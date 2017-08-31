@@ -1,110 +1,134 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/listing"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:background="@android:color/white"
-    android:elevation="4dp"
-    android:orientation="horizontal"
-    android:weightSum="5">
+    android:layout_gravity="bottom"
+    android:layout_marginBottom="@dimen/cardMarginVertical"
+    android:layout_marginLeft="@dimen/cardMarginHorizontal"
+    android:layout_marginRight="@dimen/cardMarginHorizontal"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="0dp">
 
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:orientation="vertical"
-        android:padding="4dp">
-
-        <TextView
-            android:id="@+id/text_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:ellipsize="end"
-            android:ems="8"
-            android:gravity="start"
-            android:maxLines="1"
-            android:text="Contact_name"
-            android:textAllCaps="true"
-            android:textColor="@color/colorExtra2" />
-
-        <TextView
-            android:id="@+id/text_item"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:ellipsize="end"
-            android:ems="8"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="start"
-            android:maxLines="1"
-            android:padding="2dp"
-            android:text="Contact_item"
-            android:textColor="@color/colorExtra1" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:padding="4dp"
-        android:orientation="horizontal">
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/user_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:mrl_rippleAlpha="0.2"
+        app:mrl_rippleColor="@color/setting_ripple"
+        app:mrl_rippleHover="true"
+        app:mrl_rippleOverlay="false">
 
 
         <LinearLayout
+            android:id="@+id/listing"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="end">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-            <TextView
-                android:id="@+id/text_baki"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:text="Credit"
-                android:textAllCaps="true"
-                android:textColor="@color/colorAccent" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="end"
-                android:orientation="horizontal">
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:padding="8dp">
 
-                <ImageView
-                    android:id="@+id/check"
+                <TextView
+                    android:id="@+id/text_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_check_red_24dp"
-                    android:gravity="bottom" />
-
-                <TextView
-                    android:id="@+id/text_nrs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="sans-serif"
-                    android:text="NRS "
-                    android:textColor="@color/colorPrimaryDark" />
-
-                <TextView
-                    android:id="@+id/text_baki_amt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="sans-serif"
+                    android:ellipsize="end"
+                    android:ems="8"
+                    android:gravity="top"
                     android:maxLines="1"
-                    android:text="abc"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:layout_marginBottom="8dp"
+                    android:text="Contact_name"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorExtra2" />
 
+                <TextView
+                    android:id="@+id/text_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:ems="8"
+                    android:gravity="bottom"
+                    android:maxLines="1"
+                    android:text="Contact_item"
+                    android:textColor="@color/colorExtra1" />
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_baki"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:layout_marginBottom="8dp"
+                        android:text="Due"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorAccent" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <net.steamcrafted.materialiconlib.MaterialIconView
+                            android:id="@+id/check"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="bottom"
+                            android:scaleType="center"
+                            app:materialIcon="approval"
+                            app:materialIconColor="@color/my_blue"
+                            app:materialIconSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/text_nrs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="sans-serif"
+                            android:gravity="bottom"
+                            android:text="NRS "
+                            android:textColor="@color/colorPrimaryDark" />
+
+                        <TextView
+                            android:id="@+id/text_baki_amt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="sans-serif"
+                            android:gravity="bottom"
+                            android:maxLines="1"
+                            android:text="abc"
+                            android:textColor="@color/colorPrimaryDark" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
-
-
-    </LinearLayout>
-
-</LinearLayout>
+    </com.balysv.materialripple.MaterialRippleLayout>
+</android.support.v7.widget.CardView>
