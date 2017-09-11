@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.MinWidth">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorPrimary">@color/colorPrimary</item>
-        <item name="android:background">#fddd</item>
+        <item name="android:background">@color/light_gray</item>
+        <item name="android:textColorPrimary">@color/dark_gray</item>
+        <item name="android:textColorHighlight">@color/colorPrimaryDark</item>
+        <item name="android:padding">4dp</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -16,6 +19,8 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:popupBackground">@color/colorPrimaryDark</item>
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -32,7 +37,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
-
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowTransitionBackgroundFadeDuration">4000</item>
 

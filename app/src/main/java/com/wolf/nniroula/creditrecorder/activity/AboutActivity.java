@@ -83,7 +83,7 @@ public class AboutActivity extends AppCompatActivity {
                 return HeaderDesign.fromColorAndDrawable(
                         ContextCompat.getColor(CreditApplication.getAppContext(), R.color.my_blue),
                         ContextCompat.getDrawable(
-                                CreditApplication.getAppContext(), R.drawable.cocoin_blue_bg));
+                                CreditApplication.getAppContext(), R.drawable.blue_cover));
             }
         });
 

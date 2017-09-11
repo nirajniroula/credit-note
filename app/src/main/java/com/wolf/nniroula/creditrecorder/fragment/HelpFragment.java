@@ -56,8 +56,8 @@ public class HelpFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if (context instanceof Activity){
-            activity = (Activity)context;
+        if (context instanceof Activity) {
+            activity = (Activity) context;
         }
     }
 
@@ -79,122 +79,121 @@ public class HelpFragment extends Fragment {
         mScrollView = (ObservableScrollView) view.findViewById(R.id.scrollView);
         MaterialViewPagerHelper.registerScrollView(getActivity(), mScrollView, null);
 
-        int width = CreditUtil.getInstance().getScreenWidth(mContext) - CreditUtil.getInstance().changeDpToPx(20);
+        int width = CreditUtil.getInstance().getScreenWidth(mContext) - CreditUtil.getInstance().changeDpToPx(24);
         int height = width * 653 / 1280;
-        int height2 = width * 1306 / 960;
 
-        title = (TextView)view.findViewById(R.id.title);
+        title = (TextView) view.findViewById(R.id.title);
         title.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
-        imageView1 = (ImageView)view.findViewById(R.id.help_cocoin_image_1);
+        imageView1 = (ImageView) view.findViewById(R.id.help_credit_image_1);
         ViewGroup.LayoutParams layoutParams = imageView1.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
         Picasso.with(mContext)
-                .load("http://file.bmob.cn/M02/7A/CC/oYYBAFaxox2AYPyvAAIBwVjp9Ps450.png")
+                .load(R.drawable.help0)
                 .resize(width, height)
                 .centerCrop()
                 .into(imageView1);
-        textView2 = (TextView)view.findViewById(R.id.help_cocoin_content_2);
+        textView2 = (TextView) view.findViewById(R.id.help_credit_content_2);
         textView2.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
-        imageView2 = (ImageView)view.findViewById(R.id.help_cocoin_image_2);
+        imageView2 = (ImageView) view.findViewById(R.id.help_credit_image_2);
         layoutParams = imageView2.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
         Picasso.with(mContext)
-                .load("http://file.bmob.cn/M02/7A/F2/oYYBAFaxthGAFpc2AALJcSxCKIY003.png")
+                .load(R.drawable.help1)
                 .resize(width, height)
                 .centerCrop()
                 .into(imageView2);
-        textView3 = (TextView)view.findViewById(R.id.help_cocoin_content_3);
+        textView3 = (TextView) view.findViewById(R.id.help_credit_content_3);
         textView3.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
-        imageView3 = (ImageView)view.findViewById(R.id.help_cocoin_image_3);
+        imageView3 = (ImageView) view.findViewById(R.id.help_credit_image_3);
         layoutParams = imageView3.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
         Picasso.with(mContext)
-                .load("http://file.bmob.cn/M02/7A/F3/oYYBAFaxtiOAZDsYAAKtT7PeOP4375.png")
+                .load(R.drawable.help2)
                 .resize(width, height)
                 .centerCrop()
                 .into(imageView3);
-        textView4 = (TextView)view.findViewById(R.id.help_cocoin_content_4);
+        textView4 = (TextView) view.findViewById(R.id.help_credit_content_4);
         textView4.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
-        imageView4 = (ImageView)view.findViewById(R.id.help_cocoin_image_4);
+        imageView4 = (ImageView) view.findViewById(R.id.help_credit_image_4);
         layoutParams = imageView4.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
         Picasso.with(mContext)
-                .load("http://file.bmob.cn/M02/7A/F3/oYYBAFaxtkeAafYNAAa6d5bj-jk765.png")
+                .load(R.drawable.help3)
                 .resize(width, height)
                 .centerCrop()
                 .into(imageView4);
-        textView5 = (TextView)view.findViewById(R.id.help_cocoin_content_5);
+        textView5 = (TextView) view.findViewById(R.id.help_credit_content_5);
         textView5.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
-        imageView5 = (ImageView)view.findViewById(R.id.help_cocoin_image_5);
+        imageView5 = (ImageView) view.findViewById(R.id.help_credit_image_5);
         layoutParams = imageView5.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
         Picasso.with(mContext)
-                .load("http://file.bmob.cn/M02/7A/F3/oYYBAFaxtl2AQQ7PAAO6x9BzDeE570.png")
+                .load(R.drawable.help4)
                 .resize(width, height)
                 .centerCrop()
                 .into(imageView5);
-        textView6 = (TextView)view.findViewById(R.id.help_cocoin_content_6);
+        textView6 = (TextView) view.findViewById(R.id.help_credit_content_6);
         textView6.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
-        imageView6 = (ImageView)view.findViewById(R.id.help_cocoin_image_6);
+        imageView6 = (ImageView) view.findViewById(R.id.help_credit_image_6);
         layoutParams = imageView6.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
         Picasso.with(mContext)
-                .load("http://file.bmob.cn/M02/7A/F3/oYYBAFaxtm2Aar8bAAMk6Ll6aq8839.png")
+                .load(R.drawable.help5)
                 .resize(width, height)
                 .centerCrop()
                 .into(imageView6);
-        textView7 = (TextView)view.findViewById(R.id.help_cocoin_content_7);
+        textView7 = (TextView) view.findViewById(R.id.help_credit_content_7);
         textView7.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
-        imageView7 = (ImageView)view.findViewById(R.id.help_cocoin_image_7);
+        imageView7 = (ImageView) view.findViewById(R.id.help_credit_image_7);
         layoutParams = imageView7.getLayoutParams();
         layoutParams.width = width;
-        layoutParams.height = height2;
+        layoutParams.height = height;
         Picasso.with(mContext)
-                .load("http://file.bmob.cn/M02/7A/F3/oYYBAFaxtoaALyf-AAX0r-dNE0M891.png")
-                .resize(width, height2)
+                .load(R.drawable.help6)
+                .resize(width, height)
                 .centerCrop()
                 .into(imageView7);
-        textView8 = (TextView)view.findViewById(R.id.help_cocoin_content_8);
+        textView8 = (TextView) view.findViewById(R.id.help_credit_content_8);
         textView8.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
-        imageView8 = (ImageView)view.findViewById(R.id.help_cocoin_image_8);
+        imageView8 = (ImageView) view.findViewById(R.id.help_credit_image_8);
         layoutParams = imageView8.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
         Picasso.with(mContext)
-                .load("http://file.bmob.cn/M02/7A/F4/oYYBAFaxtreAYbnKAANJdVJiQs0863.png")
+                .load(R.drawable.help7)
                 .resize(width, height)
                 .centerCrop()
                 .into(imageView8);
-        textView9 = (TextView)view.findViewById(R.id.help_cocoin_content_9);
+        textView9 = (TextView) view.findViewById(R.id.help_credit_content_9);
         textView9.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
-        imageView9 = (ImageView)view.findViewById(R.id.help_cocoin_image_9);
+        imageView9 = (ImageView) view.findViewById(R.id.help_credit_image_9);
         layoutParams = imageView9.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = height;
         Picasso.with(mContext)
-                .load("http://file.bmob.cn/M02/7A/F4/oYYBAFaxts-AdUjPAAKhvkkpEtk060.png")
+                .load(R.drawable.help8)
                 .resize(width, height)
                 .centerCrop()
                 .into(imageView9);
-        textView10 = (TextView)view.findViewById(R.id.help_cocoin_content_10);
+        textView10 = (TextView) view.findViewById(R.id.help_credit_content_10);
         textView10.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
-        foot = (TextView)view.findViewById(R.id.foot);
+        foot = (TextView) view.findViewById(R.id.foot);
         foot.setTypeface(CreditUtil.getInstance().typefaceLatoLight);
     }
 

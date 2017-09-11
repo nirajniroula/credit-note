@@ -31,6 +31,7 @@ import com.wolf.nniroula.creditrecorder.activity.CreditApplication;
 import com.wolf.nniroula.creditrecorder.adapter.RecordAdapter;
 import com.wolf.nniroula.creditrecorder.dbhelper.Recorder;
 import com.wolf.nniroula.creditrecorder.model.PaidModel;
+import com.wolf.nniroula.creditrecorder.model.RecordManager;
 import com.wolf.nniroula.creditrecorder.model.RecordModel;
 import com.wolf.nniroula.creditrecorder.ui.interfaces.MyDialogListener;
 import com.wolf.nniroula.creditrecorder.utils.CreditUtil;
@@ -67,6 +68,7 @@ public class ProfileDialog extends DialogFragment {
     private MyDialogListener closeListener;
     private ArrayAdapter<String> adapter;
     private String shareData = null;
+    public static String USER_NAME = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,7 +162,7 @@ public class ProfileDialog extends DialogFragment {
                 final AlertDialog.Builder builder =
                         new AlertDialog.Builder(mActivity, R.style.AppCompatAlertDialogStyle);
                 builder.setTitle(cModel.getName().toUpperCase());
-                builder.setMessage("Clear " + cModel.getName() + "'s account ?");
+                builder.setMessage("Clear " + cModel.getName() + "'s account permanently?");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -178,7 +180,7 @@ public class ProfileDialog extends DialogFragment {
                         dialog.dismiss();
                     }
                 });
-                builder.setIcon(R.mipmap.ic_alert_del);
+                builder.setIcon(R.drawable.ic_report_problem_black_24dp);
                 builder.show();
 
             }
@@ -187,14 +189,12 @@ public class ProfileDialog extends DialogFragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(mContext, MyActivity.class);
-//                intent.putExtra("key", cModel.getName());
-//                dismiss();
-//                startActivity(intent);
+
+                USER_NAME = cModel.getName();
+                dismiss();
 
             }
         });
-
 
         share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,6 +273,10 @@ public class ProfileDialog extends DialogFragment {
             showToast(2);
         } catch (IOException e) {
             e.printStackTrace();
+            showToast(4);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showToast(4);
         }
 
     }
@@ -305,7 +309,7 @@ public class ProfileDialog extends DialogFragment {
             shareData = shareData + ListInd.get(i) + "\n";
         }
         Double totalPaid = 0.00;
-        final ArrayList<PaidModel> PaidList = db.getAllIndPaid(cModel.getName());
+        final ArrayList<PaidModel> PaidList = RecordManager.getAllIndPaid(cModel.getName());
         ListPaid = new ArrayList<>();
         for (int i = 0; i < PaidList.size(); i++) {
             totalPaid = totalPaid + PaidList.get(i).getPaid();
@@ -357,7 +361,7 @@ public class ProfileDialog extends DialogFragment {
 
                         final AlertDialog.Builder builder =
                                 new AlertDialog.Builder(mActivity, R.style.AppCompatAlertDialogStyle);
-                        builder.setTitle("Delete " + cModel.getName() + "'s Entry ?");
+                        builder.setTitle("Delete " + cModel.getName() + "'s entry permanently?");
                         builder.setMessage(ListIndPaid.get(position).substring(2));
                         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
@@ -384,7 +388,7 @@ public class ProfileDialog extends DialogFragment {
                                 dialog.dismiss();
                             }
                         });
-                        builder.setIcon(R.mipmap.ic_alert_del);
+                        builder.setIcon(R.drawable.ic_report_problem_black_24dp);
                         builder.show();
 
                     }
@@ -449,6 +453,11 @@ public class ProfileDialog extends DialogFragment {
                 // Entry delete
                 superToast.setText("Entry deleted.");
                 superToast.setBackground(SuperToast.Background.BLUE);
+                break;
+            case 4:
+                // Entry wrong
+                superToast.setText("Something's wrong!");
+                superToast.setBackground(SuperToast.Background.RED);
                 break;
         }
         superToast.getTextView().setTypeface(CreditUtil.getTypeface());

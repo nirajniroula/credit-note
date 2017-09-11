@@ -4,12 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.wolf.nniroula.creditrecorder.model.ItemModel;
 import com.wolf.nniroula.creditrecorder.model.PaidModel;
-import com.wolf.nniroula.creditrecorder.model.RecordManager;
 import com.wolf.nniroula.creditrecorder.model.RecordModel;
 
 import java.io.IOException;
@@ -167,6 +167,13 @@ public class Recorder extends SQLiteOpenHelper {
         return db.update(TABLE_PRICE, cv, KEY_ID + "=" + itemModel.getId(), null);
     }
 
+    public long UpdateEntrysItem(String Old, String New) throws IOException, SQLiteException {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_ITEM, New);
+        return db.update(TABLE_ENTRY, cv, KEY_ITEM + "=" + Old, null);
+    }
+
     public ArrayList<ItemModel> getAllPrices() {
         ArrayList<ItemModel> ItemList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_PRICE;
@@ -229,7 +236,6 @@ public class Recorder extends SQLiteOpenHelper {
             do {
                 RecordModel contMod = new RecordModel(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getDouble(2), cursor.getString(3), cursor.getString(4), cursor.getDouble(5), cursor.getString(6));
                 ContactList.add(contMod);
-                RecordManager.TOTAL_CREDITS += contMod.getPrice();
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -251,8 +257,6 @@ public class Recorder extends SQLiteOpenHelper {
                 PaidModel contMod = new PaidModel(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getDouble(2), cursor.getString(3));
                 Log.v("Last", "update_date" + cursor.getString(1));
                 PaidList.add(contMod);
-                RecordManager.TOTAL_DEBITS += contMod.getPaid();
-
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -283,7 +287,28 @@ public class Recorder extends SQLiteOpenHelper {
         return RecordList;
     }
 
-    public ArrayList<PaidModel> getAllIndPaid(String UserName) {
+    public ArrayList<RecordModel> getAllIndDataForItem(String Item) throws IOException {
+        ArrayList<RecordModel> RecordList = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_ENTRY + " WHERE " + KEY_ITEM + "=?";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{Item});
+        // Fetch the data from first row
+        if (cursor.moveToFirst()) {
+
+            do {
+                RecordModel contMod = new RecordModel(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getDouble(2), cursor.getString(3), cursor.getString(4), cursor.getDouble(5), cursor.getString(6));
+
+                RecordList.add(contMod);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return RecordList;
+    }
+
+    public ArrayList<PaidModel> getAllIndPaid(String UserName) throws IOException {
         ArrayList<PaidModel> PaidList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_PAID + " WHERE " + KEY_NAME + "=?";
 
@@ -370,16 +395,36 @@ public class Recorder extends SQLiteOpenHelper {
         }
     }
 
+    public boolean verifyItem(String _item) throws SQLException {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int count = -1;
+        Cursor c = null;
+        try {
+            String query = "SELECT COUNT(*) FROM "
+                    + TABLE_PRICE + " WHERE " + KEY_ITEM + " = ?";
+            c = db.rawQuery(query, new String[]{_item});
+            if (c.moveToFirst()) {
+                count = c.getInt(0);
+            }
+            return count > 0;
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+        }
+    }
+
+    //Deletes all rows from entries with the given name.
     public void delEntries(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(TABLE_ENTRY, KEY_NAME + "=?", new String[]{name});
 
         db.close();
-        Log.v("DB", "Deleted rows from favourite.");
+        Log.v("DB", "Deleted all rows from entries with the given name.");
     }
 
-    //Deletes Individual's Paid Records.
+    //Deletes all rows from paid with the given name.
     public void delPaidEntries(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
 

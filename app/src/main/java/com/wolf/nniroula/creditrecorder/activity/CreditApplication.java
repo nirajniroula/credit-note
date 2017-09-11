@@ -9,7 +9,7 @@ import com.squareup.leakcanary.RefWatcher;
 
 public class CreditApplication extends Application {
 
-    public static final int VERSION = 106;
+    public static final int VERSION = 160;
     private static Context mContext;
 
     public static RefWatcher getRefWatcher(Context context) {

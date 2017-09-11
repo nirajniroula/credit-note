@@ -26,17 +26,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="270dp"
                 android:layout_gravity="top"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/colorPrimary"
                 android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/app_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/searchCardMarginVertical"
                     android:layout_marginTop="30dp"
-                    android:padding="22dp"
-                    android:src="@drawable/credit_logo"
+                    android:src="@drawable/header_logo"
                     app:civ_border_color="@color/white" />
 
                 <TextView
@@ -45,7 +45,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:paddingTop="10dp"
                     android:text="Credit Note"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
@@ -114,7 +113,7 @@
                             android:gravity="center"
                             android:text="0"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="40sp" />
+                            android:textSize="28sp" />
 
                         <TextView
                             android:id="@+id/dues_text"
@@ -178,7 +177,7 @@
                         android:background="@null"
                         android:gravity="center_vertical|left"
                         android:paddingLeft="10dp"
-                        android:text="@string/account_book_name"
+                        android:text="@string/note_name"
                         android:textColor="@color/drawer_text" />
 
                     <TextView
@@ -384,6 +383,73 @@
                 </com.balysv.materialripple.MaterialRippleLayout>
 
             </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="@dimen/cardMarginVertical"
+            android:layout_marginLeft="@dimen/cardMarginHorizontal"
+            android:layout_marginRight="@dimen/cardMarginHorizontal"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp"
+            app:cardPreventCornerOverlap="false"
+            app:contentPadding="0dp">
+
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:id="@+id/sort_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:mrl_rippleAlpha="0.2"
+                app:mrl_rippleColor="@color/setting_ripple"
+                app:mrl_rippleHover="true"
+                app:mrl_rippleOverlay="false">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <net.steamcrafted.materialiconlib.MaterialIconView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:background="@color/transparent"
+                        android:scaleType="center"
+                        app:materialIcon="sort"
+                        app:materialIconColor="@color/colorPrimaryDark"
+                        app:materialIconSize="24dp" />
+
+                    <TextView
+                        android:id="@+id/sort_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|left"
+                        android:background="@null"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="10dp"
+                        android:text="@string/sort_text"
+                        android:textColor="@color/drawer_text" />
+
+                    <TextView
+                        android:id="@+id/sort_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|left"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:ellipsize="marquee"
+                        android:gravity="center_vertical|right"
+                        android:maxLines="1"
+                        android:paddingRight="10dp"
+                        android:text="Name"
+                        android:textColor="@color/drawer_text"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </com.balysv.materialripple.MaterialRippleLayout>
 
         </android.support.v7.widget.CardView>
 

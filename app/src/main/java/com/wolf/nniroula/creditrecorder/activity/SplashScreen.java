@@ -18,6 +18,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.wolf.nniroula.creditrecorder.R;
 import com.wolf.nniroula.creditrecorder.model.RecordManager;
+import com.wolf.nniroula.creditrecorder.model.SettingManager;
 import com.wolf.nniroula.creditrecorder.utils.CreditUtil;
 
 import io.codetail.animation.ViewAnimationUtils;
@@ -100,7 +101,6 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
 
-                Log.d("CoCoin", "Showing animation completed");
                 showAnimationCompleted = true;
                 if (loadDataCompleted && showAnimationCompleted && !activityStarted) {
                     activityStarted = true;
@@ -140,7 +140,7 @@ public class SplashScreen extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             Looper.prepare();
-
+            SettingManager.getInstance();
             RecordManager.getInstance(CreditApplication.getAppContext());
             CreditUtil.init(CreditApplication.getAppContext());
             return null;

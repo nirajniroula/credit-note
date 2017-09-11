@@ -15,14 +15,14 @@
 
     <style name="AppThemeMain" parent="AppBaseTheme">
 
-
+        <item name="android:popupBackground">@color/colorPrimaryDark</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
-
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
 
         <!-- Toolbar Theme / Apply white arrow -->
         <item name="colorControlNormal">@android:color/white</item>
@@ -71,9 +71,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+
         <item name="android:windowNoTitle">true</item>
 
     </style>
+
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -81,11 +84,13 @@
     </style>
 
     <style name="myDialog" parent="Theme.AppCompat.Light.Dialog.MinWidth">
-        <item name="android:textColorSecondary">@android:color/holo_blue_dark</item>
-        <item name="android:textColorHighlight">@android:color/holo_blue_dark</item>
-        <item name="android:textColorPrimary">@android:color/holo_blue_dark</item>
-        <item name="android:textColorTertiary">@android:color/holo_blue_dark</item>
-        <item name="android:textCheckMark">@android:color/holo_blue_dark</item>
+        <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
+        <item name="android:textColorHighlight">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
+        <item name="android:textColorTertiary">@color/colorPrimaryDark</item>
+        <item name="android:textCheckMark">@color/colorPrimaryDark</item>
+        <item name="android:spinnerDropDownItemStyle">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/dark_gray</item>
 
         <item name="android:windowNoTitle">true</item>
         <item name="android:padding">2dp</item>
@@ -96,21 +101,25 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert" tools:targetApi="lollipop">
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.MinWidth" tools:targetApi="lollipop">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorPrimary">@color/colorPrimary</item>
-        <item name="android:background">#fddd</item>
+        <item name="android:background">@color/light_gray</item>
+        <item name="android:textColorPrimary">@color/dark_gray</item>
+        <item name="android:textColorHighlight">@color/colorPrimaryDark</item>
+        <item name="android:padding">2dp</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="SpinnerDropdownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem" />
 
-    <style name = "myRadioButtonStyle" parent = "@android:style/Widget.CompoundButton.RadioButton" >
-        <item name = "colorControlNormal">@color/colorPrimary</item>
-        <item name = "colorControlActivated">@color/colorAccent</item>
-        <item name = "colorControlHighlight">@color/colorPrimaryDark</item>
+
+    <style name="myRadioButtonStyle" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
     </style>
 
 </resources>

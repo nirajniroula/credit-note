@@ -26,14 +26,14 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
-import com.google.android.gms.ads.AdView;
 import com.rey.material.widget.RadioButton;
 import com.wolf.nniroula.creditrecorder.R;
 import com.wolf.nniroula.creditrecorder.activity.CreditApplication;
+import com.wolf.nniroula.creditrecorder.dialogs.ProfileDialog;
 import com.wolf.nniroula.creditrecorder.model.ItemModel;
 import com.wolf.nniroula.creditrecorder.model.RecordManager;
+import com.wolf.nniroula.creditrecorder.model.SettingManager;
 import com.wolf.nniroula.creditrecorder.utils.CreditUtil;
-import com.wolf.nniroula.creditrecorder.utils.PreferenceCredit;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,7 +52,7 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
     private String item = "";
     private Button save;
     private Double sWt, Total, sPaid;
-    private AdView mAdView;
+    private TextView infoText;
     private ArrayList<ItemModel> itemModels = null;
     private CheckBox dateCheck;
     private RecordManager recordManager;
@@ -80,8 +80,9 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getContext();
-        recordManager = new RecordManager(mContext);
+        recordManager = RecordManager.getInstance(mContext);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,8 +93,17 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
         view.setAlpha(1f);
         view.startAnimation(animation1);
 
+
+        this.infoText = (TextView) view.findViewById(R.id.info_text);
+        this.infoText.setTypeface(CreditUtil.typefaceLatoLight);
+
         this.name = (EditText) view.findViewById(R.id.input_name);
         this.name.setTypeface(CreditUtil.typefaceLatoLight);
+        if (ProfileDialog.USER_NAME != null) {
+            Log.e("Add new", "Username");
+            this.name.setText(ProfileDialog.USER_NAME);
+            ProfileDialog.USER_NAME = null;
+        }
 
         this.date = (EditText) view.findViewById(R.id.input_date);
         this.date.setTypeface(CreditUtil.typefaceLatoLight);
@@ -159,8 +169,9 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
                                     if (!"".equals(cPaid)) {
                                         sPaid = Double.parseDouble(paid.getText().toString());
                                         recordManager.createPaid(sName, sPaid, sDate);
-                                        showToast("Saved", 1);
+
                                     }
+                                    showToast("Saved", 1);
                                 }
                             });
                             builder.setNegativeButton("RENAME", new DialogInterface.OnClickListener() {
@@ -169,7 +180,7 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
 
                                     name.setSelection(name.getText().length());
                                     dialog.dismiss();
-                                    name.setHovered(true);
+                                    name.setFocusable(true);
                                 }
                             });
                             builder.setIcon(R.drawable.ic_add_alert_red_24dp);
@@ -180,9 +191,9 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
                             if (!"".equals(cPaid)) {
                                 sPaid = Double.parseDouble(paid.getText().toString());
                                 recordManager.createPaid(sName, sPaid, sDate);
-                                showToast("Saved", 1);
                             }
                             recordManager.createEntry(sName, sWt, item, sUnit, Total, sDate);
+                            showToast("Saved", 1);
                             name.setText(null);
                             weight.setText(null);
                             paid.setText(null);
@@ -192,6 +203,7 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                    showToast("Operation failed.", 3);
                 }
             }
         });
@@ -240,6 +252,7 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
         mScrollView = (ObservableScrollView) view.findViewById(R.id.scrollView);
         MaterialViewPagerHelper.registerScrollView(getActivity(), mScrollView, null);
 
+
     }
 
     private void showToast(String msg, int toastType) {
@@ -261,6 +274,10 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
                 // Update fail
                 superToast.setBackground(SuperToast.Background.RED);
                 break;
+            case 3:
+                // Update fail
+                superToast.setBackground(SuperToast.Background.RED);
+                break;
         }
         superToast.getTextView().setTypeface(CreditUtil.getTypeface());
         superToast.show();
@@ -269,14 +286,13 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-
         for (int i = 0; i < RecordManager.TOTAL_ITEMS; i++) {
             radioButton[i].setChecked(false);
             if (v.getId() == i) {
                 price = RecordManager.ALL_ITEMS.get(i).getItem_price();
                 item = RecordManager.ALL_ITEMS.get(i).getItem_name();
                 weight.setHint("*Quantity [" + RecordManager.ALL_ITEMS.get(i).getItem_unit() + "]");
-                paid.setHint("Paid [" + PreferenceCredit.getCurrency() + "]");
+                paid.setHint("Debit [" + SettingManager.getInstance().getCurrency() + "]");
                 sUnit = RecordManager.ALL_ITEMS.get(i).getItem_unit();
                 Log.e("View", v.getId() + "--" + RecordManager.ALL_ITEMS.get(i).getId());
                 radioButton[i].setChecked(true);
@@ -285,5 +301,11 @@ public class AddNewFragment extends Fragment implements View.OnClickListener {
             }
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        RecordManager.initRecords();
+        super.onResume();
     }
 }

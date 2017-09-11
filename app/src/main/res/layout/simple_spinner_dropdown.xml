@@ -3,8 +3,8 @@
     style="@style/SpinnerDropdownItemStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@color/transparent"
     android:ellipsize="marquee"
     android:maxLines="1"
     android:padding="16dp"
-    android:textColor="@color/my_blue" />
+    android:textColor="@color/colorPrimaryDark" />

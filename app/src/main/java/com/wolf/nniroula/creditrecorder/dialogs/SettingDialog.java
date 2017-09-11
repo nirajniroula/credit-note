@@ -3,8 +3,10 @@ package com.wolf.nniroula.creditrecorder.dialogs;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -19,13 +21,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.wolf.nniroula.creditrecorder.R;
 import com.wolf.nniroula.creditrecorder.dbhelper.Recorder;
 import com.wolf.nniroula.creditrecorder.model.ItemModel;
-import com.wolf.nniroula.creditrecorder.R;
+import com.wolf.nniroula.creditrecorder.model.RecordManager;
+import com.wolf.nniroula.creditrecorder.ui.interfaces.MyDialogListener;
+import com.wolf.nniroula.creditrecorder.utils.CreditUtil;
 
-import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -43,6 +51,7 @@ public class SettingDialog extends DialogFragment {
     int SelItemId = 0;
     private boolean add = false;
     private ProgressDialog pDialog;
+    private MyDialogListener closeListener;
 
 
     @Override
@@ -50,26 +59,35 @@ public class SettingDialog extends DialogFragment {
         View rootView = inflater.inflate(R.layout.setting, container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
-        try {
-            db = new Recorder(mContext);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Items = db.getAllPrices();
+        db = RecordManager.db;
+        Items = RecordManager.ALL_ITEMS;
 
         if (Items.isEmpty()) {
             add = true;
         }
 
         Name = (EditText) rootView.findViewById(R.id.editName);
+        Name.setTypeface(CreditUtil.typefaceLatoLight);
+
         Price = (EditText) rootView.findViewById(R.id.editPrice);
+        Price.setTypeface(CreditUtil.typefaceLatoLight);
+
         Unit = (EditText) rootView.findViewById(R.id.editMeasurementUnit);
+        Unit.setTypeface(CreditUtil.typefaceLatoLight);
+
         title = (TextView) rootView.findViewById(R.id.textTitle);
+        title.setTypeface(CreditUtil.typefaceLatoLight);
+
         addNew = (FloatingActionButton) rootView.findViewById(R.id.floatNew);
 
         save = (Button) rootView.findViewById(R.id.butSave);
+        save.setTypeface(CreditUtil.typefaceLatoLight);
+
         cancel = (Button) rootView.findViewById(R.id.butCancel);
+        cancel.setTypeface(CreditUtil.typefaceLatoLight);
+
         spinner = (Spinner) rootView.findViewById(R.id.spinner);
+
         final String spinnerArray[] = new String[Items.size()];
         if (!add) {
             for (int i = 0; i < Items.size(); i++) {
@@ -98,6 +116,7 @@ public class SettingDialog extends DialogFragment {
             cancel.setText("Cancel");
             save.setText("Add");
             Name.setText(null);
+            Name.setEnabled(true);
             Price.setText(null);
             Unit.setText(null);
         }
@@ -107,7 +126,7 @@ public class SettingDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (Name.getText() == null || Price.getText() == null || Unit.getText() == null || "".equals(Name.getText().toString()) || "".equals(Price.getText().toString()) || "".equals(Unit.getText().toString())) {
-                    Toast.makeText(mContext, "Enter the required values!", Toast.LENGTH_SHORT).show();
+                    showToast(0);
                 } else {
                     new PostTask().execute();
                 }
@@ -125,13 +144,13 @@ public class SettingDialog extends DialogFragment {
                     final AlertDialog.Builder builder =
                             new AlertDialog.Builder(mContext, R.style.AppCompatAlertDialogStyle);
                     builder.setTitle(Name.getText().toString().toUpperCase());
-                    builder.setMessage("Delete this item ?");
+                    builder.setMessage("Delete this item permanently ?");
                     builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
                             db.delItem(SelItemId);
-                            Toast.makeText(mContext, "Item Deleted Successfully.", Toast.LENGTH_SHORT).show();
+                            showToast(1);
                             dismiss();
 
                         }
@@ -139,38 +158,95 @@ public class SettingDialog extends DialogFragment {
                     builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            dismiss();
                         }
                     });
-                    builder.setIcon(R.mipmap.ic_alert_del);
+                    builder.setIcon(R.drawable.ic_report_problem_black_24dp);
                     builder.show();
+                } else if (add) {
+                    dismiss();
                 }
 
-                dismiss();
             }
         });
 
         addNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                add = true;
-                addNew.hide();
-                spinner.setVisibility(View.INVISIBLE);
-                title.setText("Add New Item");
-                cancel.setText("Cancel");
-                save.setText("Add");
-                Name.setText(null);
-                Price.setText(null);
-                Unit.setText(null);
+
+//                if (RecordManager.TOTAL_ITEMS > 5) {
+//                    if (SettingManager.getInstance().isVideoWatched()) {
+//                        showAddNew();
+//                    } else {
+//                        showAdDialog();
+//                    }
+//                } else {
+//                    showAddNew();
+//                }
+                showAddNew();
             }
         });
         return rootView;
+    }
+
+    private void showAdDialog() {
+        new MaterialDialog.Builder(mContext)
+                .theme(Theme.LIGHT)
+                .typeface(CreditUtil.getTypeface(), CreditUtil.getTypeface())
+                .title(R.string.ad_dialog_title)
+                .content(R.string.ad_dialog_content)
+                .iconRes(R.drawable.ic_movie_black_24dp)
+                .negativeText(R.string.ad_dialog_positive)
+                .positiveText(R.string.ad_dialog_negative)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                        showAddNew();
+
+                    }
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                        dialog.dismiss();
+
+                    }
+                })
+                .show();
+    }
+
+    private void showAddNew() {
+        add = true;
+        addNew.hide();
+        spinner.setVisibility(View.INVISIBLE);
+        title.setText("Add New Item");
+        cancel.setText("Cancel");
+        save.setText("Add");
+        Name.setText(null);
+        Name.setEnabled(true);
+        Price.setText(null);
+        Unit.setText(null);
+    }
+
+    public void DismissListener(MyDialogListener closeDialogListener) {
+        this.closeListener = closeDialogListener;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if (closeListener != null) {
+            closeListener.handleDialogDismiss(null);
+        }
     }
 
 
     public void SetPrice(int id) {
 
         Name.setText(Items.get(id).getItem_name());
+        Name.setEnabled(false);
         Price.setText(Items.get(id).getItem_price().toString());
         Unit.setText(Items.get(id).getItem_unit());
     }
@@ -202,20 +278,30 @@ public class SettingDialog extends DialogFragment {
         @Override
         protected Boolean doInBackground(String... params) {
 
+            try {
+                if (!add) {
+                    ItemModel NewPrices = getNewPrice(SelItemId);
+                    db.UpdatePrice(NewPrices);
+                    return true;
+                } else if (add) {
 
-            if (!add) {
-                ItemModel NewPrices = getNewPrice(SelItemId);
-                db.UpdatePrice(NewPrices);
-                return true;
-            }
-            if (add) {
+                    ItemModel NewPrices = getNewPrice(SelItemId);
+                    if (db.verifyItem(NewPrices.getItem_name())) {
+                        return false;
+                    } else {
+                        db.CreatePrice(NewPrices);
+                        return true;
+                    }
 
-                ItemModel NewPrices = getNewPrice(SelItemId);
-                db.CreatePrice(NewPrices);
-                return true;
-            } else {
+                } else {
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            } catch (SQLException e) {
                 return false;
             }
+
         }
 
 
@@ -227,11 +313,50 @@ public class SettingDialog extends DialogFragment {
                 pDialog.dismiss();
             }
             if (result)
-                Toast.makeText(mContext, "Operation Successful.", Toast.LENGTH_SHORT).show();
+                showToast(2);
             else
-                Toast.makeText(mContext, "Operation Failed.", Toast.LENGTH_SHORT).show();
+                showToast(3);
             dismiss();
 
         }
+
+    }
+
+    private void showToast(int toastType) {
+
+        SuperToast.cancelAllSuperToasts();
+        SuperToast superToast = new SuperToast(mContext);
+
+        superToast.setAnimations(CreditUtil.TOAST_ANIMATION);
+        superToast.setDuration(SuperToast.Duration.LONG);
+        superToast.setTextColor(Color.parseColor("#ffffff"));
+        superToast.setTextSize(SuperToast.TextSize.SMALL);
+
+        String tip = "";
+
+        switch (toastType) {
+            case 0:
+                // Unable to save
+                superToast.setText("Enter the required values!");
+                superToast.setBackground(SuperToast.Background.RED);
+                break;
+            case 1:
+                // Record update
+                superToast.setText("Item Deleted Successfully.");
+                superToast.setBackground(SuperToast.Background.BLUE);
+                break;
+            case 2:
+                // Update fail
+                superToast.setText("Operation Successful.");
+                superToast.setBackground(SuperToast.Background.BLACK);
+                break;
+            case 3:
+                // Entry delete
+                superToast.setText("Operation Failed.");
+                superToast.setBackground(SuperToast.Background.RED);
+                break;
+        }
+        superToast.getTextView().setTypeface(CreditUtil.getTypeface());
+        superToast.show();
     }
 }

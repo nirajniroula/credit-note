@@ -9,8 +9,7 @@ import com.wolf.nniroula.creditrecorder.dbhelper.Recorder;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.HashMap;
 
 /**
  * Created by Niraj Niroula on 8/28/17.
@@ -19,18 +18,19 @@ import java.util.Comparator;
 public class RecordManager {
     private static RecordManager recordManager = null;
     private Context mContext;
-    private static Recorder db;
+    public static Recorder db;
     public static Double TOTAL_CREDITS = 0.00;
     public static Double TOTAL_DEBITS = 0.00;
+    public static Double TOTAL_DUES = 0.00;
     public static int TOTAL_RECORDS = 0;
     public static int TOTAL_ITEMS = 0;
 
     public static ArrayList<RecordModel> ALL_RECORDS;
-    public static ArrayList<RecordModel> ALL_RECORDS_BY_NAME;
+    public static ArrayList<PaidModel> ALL_SINGLE_PAID;
+    public static HashMap<String, Double> CREDIT_BY_ITEMS = new HashMap<>();
 
     //Don't use this to insert in DB
     public static ArrayList<RecordModel> ALL_SINGLE_RECORDS;
-    public static ArrayList<RecordModel> ALL_RECORDS_BY_CREDITS;
 
 
     public static ArrayList<PaidModel> ALL_PAID;
@@ -48,8 +48,8 @@ public class RecordManager {
     }
 
     public synchronized static RecordManager getInstance(Context context) {
-        if (ALL_RECORDS == null || ALL_ITEMS == null || TOTAL_CREDITS == null ||
-                TOTAL_DEBITS == null || recordManager == null) {
+        if (ALL_RECORDS == null || TOTAL_CREDITS == null ||
+                TOTAL_DEBITS == null || recordManager == null || ALL_SINGLE_RECORDS == null || ALL_ITEMS == null) {
 
             recordManager = new RecordManager(context);
             initRecords();
@@ -69,6 +69,10 @@ public class RecordManager {
         ALL_PAID = db.getAllPaid();
         ALL_ITEMS = db.getAllPrices();
         ALL_SINGLE_RECORDS = checkDuplicateList(ALL_RECORDS);
+        TOTAL_CREDITS = 0.00;
+        TOTAL_DEBITS = 0.00;
+        TOTAL_DUES = 0.00;
+
 
         TOTAL_ITEMS = ALL_ITEMS.size();
         TOTAL_RECORDS = ALL_SINGLE_RECORDS.size();
@@ -79,25 +83,18 @@ public class RecordManager {
             ALL_ITEMS = db.getAllPrices();
         }
 
-        ALL_RECORDS_BY_NAME = ALL_SINGLE_RECORDS;
-        ALL_RECORDS_BY_CREDITS = ALL_SINGLE_RECORDS;
+        for (int i = 0; i < ALL_RECORDS.size(); i++) {
+            TOTAL_CREDITS += ALL_RECORDS.get(i).getPrice();
+        }
 
-        Collections.sort(ALL_RECORDS_BY_NAME, new Comparator<RecordModel>() {
-            public int compare(RecordModel r1, RecordModel r2) {
-                return r1.getName().compareTo(r2.getName());
-            }
-        });
+        for (int i = 0; i < ALL_PAID.size(); i++) {
+            TOTAL_DEBITS += ALL_PAID.get(i).getPaid();
+        }
 
-        Collections.sort(ALL_RECORDS_BY_CREDITS, new Comparator<RecordModel>() {
-            public int compare(RecordModel r1, RecordModel r2) {
-                return r1.getPrice().compareTo(r2.getPrice());
-            }
-        });
+        TOTAL_DUES = TOTAL_CREDITS - TOTAL_DEBITS;
 
-        Collections.reverse(ALL_RECORDS_BY_CREDITS);
-
-        for(RecordModel recordModel:ALL_RECORDS_BY_CREDITS){
-            Log.e("SortCheck", recordModel.getPrice()+"...."+recordModel.getName());
+        for (int i = 0; i < ALL_ITEMS.size(); i++) {
+            CREDIT_BY_ITEMS.put(ALL_ITEMS.get(i).getItem_name(), getCreditForItem(ALL_ITEMS.get(i).getItem_name()));
         }
     }
 
@@ -131,6 +128,7 @@ public class RecordManager {
 
     private static String managedItems(String allItems) {
 
+
         String filteredItems = "";
         for (int i = 0; i < ALL_ITEMS.size(); i++) {
             if (allItems.contains(ALL_ITEMS.get(i).getItem_name()))
@@ -140,9 +138,14 @@ public class RecordManager {
         return filteredItems;
     }
 
-    public Double getPaid(String name) {
+    public static Double getPaid(String name) {
         Double totalPaid = 0.00;
-        ArrayList<PaidModel> PaidModel = db.getAllIndPaid(name);
+        ArrayList<PaidModel> PaidModel = null;
+        try {
+            PaidModel = db.getAllIndPaid(name);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < PaidModel.size(); i++) {
             totalPaid = totalPaid + PaidModel.get(i).getPaid();
         }
@@ -173,6 +176,32 @@ public class RecordManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<PaidModel> getAllIndPaid(String Name) {
+        try {
+            ALL_SINGLE_PAID = db.getAllIndPaid(Name);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ALL_SINGLE_PAID;
+    }
+
+    public static Double getCreditForItem(String Item) {
+        Double totalCredit = 0.00;
+
+        ArrayList<RecordModel> allIndDataForItem = new ArrayList<>();
+        try {
+            allIndDataForItem = db.getAllIndDataForItem(Item);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (allIndDataForItem != null) {
+            for (int i = 0; i < allIndDataForItem.size(); i++) {
+                totalCredit += allIndDataForItem.get(i).getPrice();
+            }
+        }
+        return totalCredit;
     }
 }
 

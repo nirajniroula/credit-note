@@ -25,8 +25,10 @@ public class HelpFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (this.position) {
-            case 0: return HelpFragment.newInstance();
-            case 1: return AboutFragment.newInstance();
+            case 0:
+                return HelpFragment.newInstance();
+            case 1:
+                return AboutFragment.newInstance();
         }
         return null;
     }
@@ -39,8 +41,10 @@ public class HelpFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (this.position) {
-            case 0: return CreditApplication.getAppContext().getResources().getString(R.string.app_name);
-            case 1: return CreditApplication.getAppContext().getResources().getString(R.string.about);
+            case 0:
+                return CreditApplication.getAppContext().getResources().getString(R.string.how_to_text);
+            case 1:
+                return CreditApplication.getAppContext().getResources().getString(R.string.about_title);
         }
         return "";
     }

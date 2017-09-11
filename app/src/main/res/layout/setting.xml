@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:theme="@style/AppTheme">
 
 
             <LinearLayout
@@ -57,12 +58,12 @@
                 android:elevation="2dp" />
 
 
-
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/colorPrimaryDark" />
 
 
             <EditText

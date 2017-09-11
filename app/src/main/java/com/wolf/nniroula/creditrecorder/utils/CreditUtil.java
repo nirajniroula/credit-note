@@ -39,6 +39,14 @@ public class CreditUtil {
             R.drawable.material_design_4
     };
 
+    public static int[] DRAWER_TOP_TIPS = {
+            R.string.tip_text_0,
+            R.string.tip_text_1,
+            R.string.tip_text_2,
+            R.string.tip_text_3,
+            R.string.tip_text_4
+    };
+
 
     public static HashMap<String, Integer> GetDrawerTopImages() {
         HashMap<String, Integer> drawerTopImages = new HashMap<>();

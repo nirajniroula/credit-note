@@ -60,7 +60,6 @@ public class AboutFragment extends Fragment {
         ((TextView)view.findViewById(R.id.content_0)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
         ((TextView)view.findViewById(R.id.content_1)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
         ((TextView)view.findViewById(R.id.content_2)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_3)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
         ((TextView)view.findViewById(R.id.content_4)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
         ((TextView)view.findViewById(R.id.content_5)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
         ((TextView)view.findViewById(R.id.content_6)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
@@ -81,33 +80,18 @@ public class AboutFragment extends Fragment {
         ((TextView)view.findViewById(R.id.content_21)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
         ((TextView)view.findViewById(R.id.content_22)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
         ((TextView)view.findViewById(R.id.content_23)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_24)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_25)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_26)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_27)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_28)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_29)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_30)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_31)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_32)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
-        ((TextView)view.findViewById(R.id.content_33)).setTypeface(CreditUtil.getInstance().typefaceLatoLight);
 
         ((MaterialRippleLayout)view.findViewById(R.id.layout_2)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/Nightonke/CoCoin")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=Phantom+Projects")));
             }
         });
-        ((MaterialRippleLayout)view.findViewById(R.id.layout_3)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://blog.csdn.net/u012925008")));
-            }
-        });
+
         ((MaterialRippleLayout)view.findViewById(R.id.layout_4)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreditUtil.getInstance().copyToClipboard("Nightonke@outlook.com", mContext);
+                CreditUtil.getInstance().copyToClipboard("niniroula@gmail.com", mContext);
                 CreditUtil.getInstance().showToast(mContext, mContext.getResources().getString(R.string.copy_to_clipboard));
             }
         });
