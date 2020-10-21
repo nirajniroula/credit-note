@@ -58,7 +58,7 @@ dependencies {
 
     // Detect the memory leak
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 
     // Ripple material
     compile 'com.balysv:material-ripple:1.0.2'
