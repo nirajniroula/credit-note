@@ -54,7 +54,7 @@ dependencies {
     compile 'com.github.rey5137:material:1.2.1'
 
     // Circle image view
-    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'de.hdodenhof:circleimageview:3.1.0'
 
     // Detect the memory leak
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
