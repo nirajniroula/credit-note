@@ -57,7 +57,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
 
     // Detect the memory leak
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:2.6'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
     // Ripple material
