@@ -42,7 +42,7 @@ dependencies {
     compile "com.android.support:support-v4:25.1.0"
 
     // Material viewpager
-    compile('com.github.florent37:materialviewpager:1.1.2@aar') {
+    compile('com.github.florent37:materialviewpager:1.2.3@aar') {
         transitive = true
     }
 
